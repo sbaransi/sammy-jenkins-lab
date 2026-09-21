@@ -1,38 +1,22 @@
 pipeline {
     agent any
 
-    environment {
-        APP_NAME = "sammy-app"
-    }
-
     stages {
 
-        stage('Hello') {
-            steps {
-                echo "Application Name: ${APP_NAME}"
-            }
-        }
-
-        stage('Use Credentials') {
+        stage('Docker Credential Test') {
             steps {
 
                 withCredentials([
                     usernamePassword(
-                        credentialsId: 'demo-creds',
-                        usernameVariable: 'MY_USER',
-                        passwordVariable: 'MY_PASS'
+                        credentialsId: 'dockerhub-creds',
+                        usernameVariable: 'DOCKER_USER',
+                        passwordVariable: 'DOCKER_TOKEN'
                     )
                 ]) {
 
-                    sh 'echo "Username: $MY_USER"'
-                    sh 'echo "Password length: ${#MY_PASS}"'
+                    sh 'echo "Docker Username: $DOCKER_USER"'
+                    sh 'echo "Token Length: ${#DOCKER_TOKEN}"'
                 }
-            }
-        }
-
-        stage('Done') {
-            steps {
-                echo 'Credentials Lab Completed'
             }
         }
     }
