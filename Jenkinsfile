@@ -6,18 +6,22 @@ pipeline {
     }
 
     stages {
+
         stage('Hello') {
             steps {
                 echo "Application Name: ${APP_NAME}"
             }
         }
 
-        stage('Environment Check') {
+        stage('QA Approval') {
             steps {
-                sh 'hostname'
-                sh 'pwd'
-                sh 'git --version'
-                sh 'java -version'
+                input 'Is the application running successfully?'
+            }
+        }
+
+        stage('Final Stage') {
+            steps {
+                echo 'Pipeline approved!'
             }
         }
     }
