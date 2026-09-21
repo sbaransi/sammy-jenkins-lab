@@ -13,38 +13,26 @@ pipeline {
             }
         }
 
-        stage('Parallel Tasks') {
-            parallel {
+        stage('Use Credentials') {
+            steps {
 
-                stage('Task 1') {
-                    steps {
-                        echo 'Running Task 1'
-                        sh 'sleep 5'
-                        echo 'Task 1 Complete'
-                    }
-                }
+                withCredentials([
+                    usernamePassword(
+                        credentialsId: 'demo-creds',
+                        usernameVariable: 'MY_USER',
+                        passwordVariable: 'MY_PASS'
+                    )
+                ]) {
 
-                stage('Task 2') {
-                    steps {
-                        echo 'Running Task 2'
-                        sh 'sleep 5'
-                        echo 'Task 2 Complete'
-                    }
-                }
-
-                stage('Task 3') {
-                    steps {
-                        echo 'Running Task 3'
-                        sh 'sleep 5'
-                        echo 'Task 3 Complete'
-                    }
+                    sh 'echo "Username: $MY_USER"'
+                    sh 'echo "Password length: ${#MY_PASS}"'
                 }
             }
         }
 
-        stage('Final Stage') {
+        stage('Done') {
             steps {
-                echo 'All parallel tasks completed'
+                echo 'Credentials Lab Completed'
             }
         }
     }
