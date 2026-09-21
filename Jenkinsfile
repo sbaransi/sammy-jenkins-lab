@@ -19,6 +19,16 @@ pipeline {
             }
         }
 
+        stage('Create Artifact') {
+            steps {
+                sh "echo 'Hello World!' > a.txt"
+                sh "date >> a.txt"
+
+                archiveArtifacts artifacts: 'a.txt',
+                                 allowEmptyArchive: true
+            }
+        }
+
         stage('Final Stage') {
             steps {
                 echo 'Pipeline approved!'
