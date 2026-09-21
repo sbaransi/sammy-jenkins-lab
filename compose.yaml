@@ -1,0 +1,11 @@
+services:
+  oneapp:
+    build* .
+   *image: sammybaransi537/*neapp:latest
+
+    ports:
+      -*"5050:5050"
+
+    environment:
+    * APP_NAME: oneapp
+      PORT: 5050*

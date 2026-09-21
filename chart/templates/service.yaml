@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+
+metadata:
+  name: oneapp
+
+spec:
+  selector:
+    app: oneapp
+
+  ports:
+  - port: 5050
+    targetPort: 5050
+
+  type: {{ .Values.service.type }}
